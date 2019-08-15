@@ -4,9 +4,9 @@ from discord.ext import commands
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
-#driver stuff
-chrome_path = r"C:\Users\joeym\Desktop\Projects\uniqloboy\chromedriver.exe"
-driver = webdriver.Chrome(chrome_path)
+#driver stuff ; find chromedriver.exe path
+#chrome_path = r"C:..."
+driver = webdriver.Chrome()
 bot = commands.Bot(command_prefix="$")
 
 
@@ -19,7 +19,7 @@ async def on_ready():
 async def pastebin(ctx):
     posts = get_paste()
     for post in posts:
-        if post != "":
+        if post != " ":
             await ctx.send(post.text)
 
 
@@ -44,5 +44,5 @@ def get_image():
     imageSRC = image[0].get_attribute("src")
     return imageSRC
 
-
-bot.run("NjEwOTAxMDM0ODM5MTc5MjY0.XVMApQ.bB0J6Akp1UWqO8fsMWK7B-sfd7Y")
+#bot token
+bot.run("")
