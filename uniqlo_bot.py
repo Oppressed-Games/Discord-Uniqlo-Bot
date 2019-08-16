@@ -1,5 +1,6 @@
 import asyncio
 import discord
+import config
 from discord.ext import commands
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -45,4 +46,4 @@ def get_image():
     return imageSRC
 
 #bot token
-bot.run("")
+bot.run(config.token, reconnect=True)
