@@ -2,6 +2,7 @@ import discord
 import re
 import bs4
 import lxml
+from timeit import default_timer as timer
 import requests
 from discord.ext import commands
 from selenium import webdriver
@@ -12,21 +13,27 @@ from selenium.webdriver.common.keys import Keys
 driver = webdriver.Chrome()
 
 
-def get_image():
+async def get_image(ctx):
     # send to uniqlo
+    start = timer()
     driver.get("https://www.uniqlo.com/us/en/women-front-button-circular-skirt-417764.html")
     image = driver.find_elements_by_class_name("primary-image")
     image_src = image[0].get_attribute("src")
+    end = timer()
+    await ctx.send(end - start)
     return image_src
 
 
-def get_image_bs4():
+async def get_image_bs4(ctx):
     # send to uniqlo
+    start = timer()
     res = requests.get("https://www.uniqlo.com/us/en/women-front-button-circular-skirt-417764.html")
     res.raise_for_status()
     soup = bs4.BeautifulSoup(res.text, "lxml")
     image = soup.select('img[class="primary-image"]')
     image_src = image[0].get('src')
+    end = timer()
+    await ctx.send(end - start)
     return image_src
 
 
@@ -66,12 +73,12 @@ class Test(commands.Cog):
 
     @commands.command()
     async def skormt(self, ctx):
-        skirt = get_image()
+        skirt = await get_image(ctx)
         await ctx.send(skirt)
 
     @commands.command()
     async def skormt_bs4(self, ctx):
-        skirt = get_image_bs4()
+        skirt = await get_image_bs4(ctx)
         await ctx.send(skirt)
 
     @commands.command()
