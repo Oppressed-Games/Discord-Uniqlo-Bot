@@ -52,27 +52,27 @@ class Test(commands.Cog):
         await ctx.send(f'Pong! {round(self.client.latency * 1000)}ms');
 
     @commands.command()
-    async def skormt(self):
+    async def skormt(self, ctx):
         skirt = get_image()
-        await self.send(skirt)
+        await ctx.send(skirt)
 
     @commands.command()
-    async def test(self, cmd):
+    async def test(self, ctx, cmd):
         print(cmd)
         if cmd == "@everyone":
-            await self.send("no")
-        await self.send(cmd)
+            await ctx.send("no")
+        await ctx.send(cmd)
 
     @commands.command()
-    async def check(self, url):
-        await self.send(get_stock(url))
+    async def check(self, ctx, url):
+        await ctx.send(get_stock(url))
 
     @commands.command()
-    async def foo(self, url):
+    async def foo(self, ctx, url):
         if re.match('^https?://(www.)?uniqlo.com/.*$', url) is not None:
-            print("wow")
+            ctx.send("wow")
         else:
-            print("not wow")
+            ctx.send("not wow")
 
 
 def setup(client):
