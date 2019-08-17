@@ -17,10 +17,6 @@ class Uniqlo(commands.Cog):
 
     # Commands
 
-    @commands.command()
-    async def ping(self, ctx):
-        await ctx.send(f'Pong! {round(self.client.latency * 1000)}ms');
-
 
 def setup(client):
     client.add_cog(Uniqlo(client))
