@@ -1,2 +1,5 @@
 discord.py
 selenium
+beautifulsoup4
+requests
+lxml

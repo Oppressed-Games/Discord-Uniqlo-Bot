@@ -1,11 +1,14 @@
 import discord
 import re
+import bs4
+import lxml
+import requests
 from discord.ext import commands
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
-#driver stuff ; find chromedriver.exe path
-#chrome_path = r"C:..."
+# driver stuff ; find chromedriver.exe path
+# chrome_path = r"C:..."
 driver = webdriver.Chrome()
 
 
@@ -14,6 +17,16 @@ def get_image():
     driver.get("https://www.uniqlo.com/us/en/women-front-button-circular-skirt-417764.html")
     image = driver.find_elements_by_class_name("primary-image")
     image_src = image[0].get_attribute("src")
+    return image_src
+
+
+def get_image_bs4():
+    # send to uniqlo
+    res = requests.get("https://www.uniqlo.com/us/en/women-front-button-circular-skirt-417764.html")
+    res.raise_for_status()
+    soup = bs4.BeautifulSoup(res.text, "lxml")
+    image = soup.select('img[class="primary-image"]')
+    image_src = image[0].get('src')
     return image_src
 
 
@@ -54,6 +67,11 @@ class Test(commands.Cog):
     @commands.command()
     async def skormt(self, ctx):
         skirt = get_image()
+        await ctx.send(skirt)
+
+    @commands.command()
+    async def skormt_bs4(self, ctx):
+        skirt = get_image_bs4()
         await ctx.send(skirt)
 
     @commands.command()
